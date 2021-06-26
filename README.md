@@ -1,2 +1,2 @@
 # PintOS
-Simple OS following littleosbook.github.io
+Simple OS following https://littleosbook.github.io/
