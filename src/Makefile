@@ -1,4 +1,4 @@
-OBJECTS = drivers/io.o drivers/output.o kernel/kmain.o loader.o
+OBJECTS = utils/string.o drivers/output.o drivers/io.o kernel/kmain.o loader.o
 CC = gcc
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 			-nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c
