@@ -1,8 +1,11 @@
 #include "../drivers/output.h"
+#include "../utils/string.h"
 
-int kmain() {
-    fb_write_cell(0, 'A', 0, 3);
-    fb_move_cursor(1);
+int kmain() 
+{
+    char test[] = "aaaaaaaaaaaaaaaaaaaa";
+
+    write(test, strlen(test));
 
     return 0;
 }

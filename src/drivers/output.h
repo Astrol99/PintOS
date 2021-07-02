@@ -19,4 +19,12 @@ void fb_move_cursor(unsigned short pos);
  */
 void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg);
 
+/** write:
+ *  Writes a buffer of characters with following cursor
+ *
+ *  @param buf Buffer of chars to print to screen
+ *  @param len Length of the buffer
+ */
+int write(char *buf, unsigned int len);
+
 #endif /* INCLUDE_OUTPUT_H */

@@ -16,3 +16,14 @@ void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg)
     fb[i] = c;  // Assign character to framebuffer
     fb[i + 1] = ((fg & 0x0F) << 4) | (bg & 0x0F);   // Adjust background and foreground of text
 }
+
+int write(char *buf, unsigned int len)
+{
+    for (unsigned int i = 0; i < len; i += 2)
+    {
+        fb_write_cell(i, buf[i/2], 7, 0);
+        fb_move_cursor(i + 1);
+    }
+
+    return len + 1;
+}
