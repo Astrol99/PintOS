@@ -1,6 +1,9 @@
 # dot-files
 .gdb_history
 
+# Emulator logs
+bochslog.txt
+
 # Prerequisites
 *.d
 

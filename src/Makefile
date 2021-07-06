@@ -36,6 +36,9 @@ os.iso: kernel.elf
 run: os.iso
 	$(EMULATOR) -boot d -cdrom os.iso -m 10240 -monitor stdio -s
 
+run-bochs: os.iso
+	bochs -f ../bochsrc.txt -q
+
 %.o: %.c
 	$(CC) $(CFLAGS)  $< -o $@
 
