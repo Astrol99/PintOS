@@ -1,19 +1,28 @@
 OBJECTS = utils/string.o drivers/output.o drivers/io.o kernel/kmain.o loader.o
-CC = gcc
+
+# Check if OSX
+os = $(shell uname -s) 
+
+CC = $(if $(filter Darwin, $(os)), i686-elf-gcc, gcc)
+
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 			-nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c
+LD = $(if $(filter Darwin, $(os)), i686-elf-ld, ld)
 LDFLAGS = -T link.ld -melf_i386
 AS = nasm
 ASFLAGS = -f elf
 
+GDB = gdb
+ISO_MAKER = $(if $(filter Darwin, $(os)), mkisofs, genisoimage)
+EMULATOR = $(if $(filter Darwin, $(os)), qemu-system-i386, qemu-system-i386.exe)
+
 all: kernel.elf
 
 kernel.elf: $(OBJECTS)
-	ld $(LDFLAGS) $(OBJECTS) -o kernel.elf
+	$(LD) $(LDFLAGS) $(OBJECTS) -o iso/boot/kernel.elf
 
 os.iso: kernel.elf
-	cp kernel.elf iso/boot/kernel.elf
-	genisoimage -R                              \
+	$(ISO_MAKER) -R                              \
 				-b boot/grub/stage2_eltorito    \
 				-no-emul-boot                   \
 				-boot-load-size 4               \
@@ -25,7 +34,7 @@ os.iso: kernel.elf
 				iso
 
 run: os.iso
-	qemu-system-i386.exe -boot d -cdrom os.iso -m 10240 -monitor stdio -s
+	$(EMULATOR) -boot d -cdrom os.iso -m 10240 -monitor stdio -s
 
 %.o: %.c
 	$(CC) $(CFLAGS)  $< -o $@
@@ -34,4 +43,4 @@ run: os.iso
 	$(AS) $(ASFLAGS) $< -o $@
 
 clean:
-	rm -rf *.o kernel.elf os.iso
+	rm -rf *.o */*.o iso/boot/kernel.elf os.iso
