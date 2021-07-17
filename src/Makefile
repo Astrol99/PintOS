@@ -11,7 +11,7 @@ LD = $(if $(filter Darwin, $(os)), i686-elf-ld, ld)
 LDFLAGS = -T link.ld -melf_i386
 
 AS = nasm
-ASFLAGS = -f elf
+ASFLAGS = -f elf32
 
 ISO_MAKER = $(if $(filter Darwin, $(os)), mkisofs, genisoimage)
 QEMU = $(if $(filter Darwin, $(os)), qemu-system-i386, qemu-system-i386.exe)
@@ -50,4 +50,4 @@ run-bochs: os.iso
 	$(AS) $(ASFLAGS) $< -o $@
 
 clean:
-	rm -rf *.o */*.o iso/boot/kernel.elf os.iso
+	rm -rf *.o */*.o iso/boot/kernel.elf os.iso bochslog.txt
