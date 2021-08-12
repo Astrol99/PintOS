@@ -1,2 +1,2 @@
 # PintOS
-Simple OS following https://littleosbook.github.io/
+Hobby Operating System following https://wiki.osdev.org/Main_Page
