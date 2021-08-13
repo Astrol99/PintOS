@@ -13,6 +13,7 @@ bochslog.txt
 *.obj
 *.elf
 *.iso
+*.bin
 
 # Linker output
 *.ilk

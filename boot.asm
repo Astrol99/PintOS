@@ -3,7 +3,7 @@ MBALIGN     equ 1 << 0              ; align loaded modules on page boundaries
 MEMINFO     equ 1 << 1              ; provide memory map 
 FLAGS       equ MBALIGN | MEMINFO   ; Multiboot 'flag' field 
 MAGIC       equ 0x1BADB002          ; 'magic number' lets bootloader find header 
-CHECKSUM    equ (-MAGIC + FLAGS)    ; Checksum of above to prove we are multiboot 
+CHECKSUM    equ -(MAGIC + FLAGS)    ; Checksum of above to prove we are multiboot 
 
 ; Declaring a multiboot header to mark program as a kernel 
 section .multiboot
