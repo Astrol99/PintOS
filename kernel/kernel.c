@@ -14,5 +14,5 @@ void kmain(void)
 {
     terminal_initialize();
 
-    terminal_writestring("Hello\nWorld!");
+    terminal_writestring("Yo\nThis\nIs\nDope!");
 }
