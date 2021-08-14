@@ -1,4 +1,4 @@
-#include "../drivers/vga.h"
+#include "../drivers/tty.h"
 
 #if defined(__linux__)
 #error "You are not using a cross-compiler, u suck"
