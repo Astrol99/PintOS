@@ -1,4 +1,6 @@
+void kmain(void);
+
 void kmain(void)
 {
-    return 0;
+
 }
