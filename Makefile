@@ -21,10 +21,10 @@ AS = nasm
 
 # Compiler options
 WARNINGS := -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align \
-            -Wwrite-strings -Wmissing-prototypes -Wmissing-declarations \
+            -Wwrite-strings \
             -Wredundant-decls -Wnested-externs -Winline -Wno-long-long \
-            -Wconversion -Wstrict-prototypes
-CFLAGS := -g -ffreestanding -nostdlib -nostdinc -O2 -std=gnu99 $(WARNINGS)
+            -Wstrict-prototypes
+CFLAGS := -g -ffreestanding -nostdlib -O2 -std=gnu99 $(WARNINGS)
 LDFLAGS = -T link.ld
 ASFLAGS = -f elf
 
