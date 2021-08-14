@@ -39,6 +39,7 @@ kernel.elf: $(OBJFILES)
 # Generate iso file of OS
 PintOS.iso: kernel.elf
 	grub-mkrescue -o PintOS.iso iso
+	@grub-file --is-x86-multiboot iso/boot/kernel.elf || (echo "GRUB multiboot file check failed $$?"; exit 1)
 
 # Run OS iso on qemu
 run: PintOS.iso
