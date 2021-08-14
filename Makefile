@@ -18,13 +18,28 @@ CFLAGS := -g -ffreestanding -nostdlib -nostdinc -O2 -std=gnu99 $(WARNINGS)
 LDFLAGS = -T kernel/linker.ld
 ASFLAGS = -f elf
 
-.PHONY: all clean
+.PHONY: all run clean
 
 all: kernel.elf
 
+# Create kernel binary
 kernel.elf: $(OBJFILES)
 	$(CC) $(LDFLAGS) -o iso/boot/kernel.elf $(CFLAGS) $(OBJFILES) -lgcc
 
+# Generate iso file of OS
+PintOS.iso: kernel.elf
+	grub-mkrescue -o PintOS.iso iso
+
+# Run OS iso on qemu
+run: PintOS.iso
+	qemu-system-i386.exe -cdrom PintOS.iso -monitor stdio
+
+# Debug OS using qemu and GDB
+debug: PintOS.iso
+	qemu-system-i386.exe -cdrom PintOS.iso -s &
+	gdb -ex "target remote localhost:1234" -ex "symbol-file iso/boot/kernel.elf" -ex "b kmain" -ex "continue"
+
+# Compile all source files
 %.o: %.c 
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -32,4 +47,4 @@ kernel.elf: $(OBJFILES)
 	$(AS) $(ASFLAGS) $< -o $@
 
 clean:
-	-$(RM) $(wildcard $(OBJFILES))
+	-$(RM) $(wildcard $(OBJFILES)) PintOS.iso
