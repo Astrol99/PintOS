@@ -58,4 +58,4 @@ debug: PintOS.iso
 	$(AS) $(ASFLAGS) $< -o $@
 
 clean:
-	-$(RM) $(wildcard $(OBJFILES)) PintOS.iso
+	-$(RM) $(wildcard $(OBJFILES)) PintOS.iso iso/boot/kernel.elf
