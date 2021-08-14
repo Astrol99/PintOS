@@ -30,8 +30,8 @@ _start:
     ; Initalize curcial processor state (TODO) 
 
     ; Enter high-level kernel (C) 
-    extern kernel_main
-    call kernel_main
+    extern kmain
+    call kmain
 
     ; Infinite loop when computer has nothing to do
     ; 1) Disable interrupts with cli
