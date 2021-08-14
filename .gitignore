@@ -1,5 +1,6 @@
 # dot-files
 .gdb_history
+.vscode
 
 # Emulator logs
 bochslog.txt
