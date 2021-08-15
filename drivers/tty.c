@@ -1,8 +1,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include "vga.h"
 #include "../utils/string.h"
+#include "vga.h"
+#include "io.h"
 
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
@@ -30,6 +31,16 @@ void terminal_initialize(void)
 void terminal_setcolor(uint8_t color) 
 {
 	terminal_color = color;
+}
+
+void terminal_move_cursor(int x, int y)
+{
+	uint16_t pos = y * VGA_WIDTH + x;
+
+	outb(TTY_COMMAND_PORT, TTY_LOW_BYTE_COMMAND);
+	outb(TTY_DATA_PORT, (uint8_t)(pos & 0xFF));
+	outb(TTY_COMMAND_PORT, TTY_HIGH_BYTE_COMMAND);
+	outb(TTY_DATA_PORT, (uint8_t)((pos >> 8) & 0xFF));
 }
 
 void terminal_scrolldown(void)
@@ -75,6 +86,7 @@ void terminal_putchar(char c)
 	}
 
 	terminal_putentryat(c, terminal_color, terminal_column++, terminal_row);
+	terminal_move_cursor(terminal_column, terminal_row);
 }
  
 void terminal_write(const char* data, size_t size) 
