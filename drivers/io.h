@@ -10,6 +10,9 @@
 #define TTY_LOW_BYTE_COMMAND    15
 
 // Function wrapper of out asm instruction
+// Write a byte to I/O port
 void outb(unsigned short port, unsigned char data);
+// Read a byte from I/O port
+unsigned char inb(unsigned short port);
 
 #endif
