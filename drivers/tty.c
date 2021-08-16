@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include "../utils/string.h"
+#include "tty.h"
 #include "vga.h"
 #include "io.h"
 
@@ -101,6 +102,7 @@ void terminal_putchar(char c)
 		if (++terminal_row >= VGA_HEIGHT)
 			terminal_scrolldown();
 		terminal_column = 0;
+		terminal_move_cursor(terminal_column, terminal_row);
 		return;
 	}
 	
