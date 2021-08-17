@@ -1,4 +1,5 @@
 #include "../drivers/tty.h"
+#include "../drivers/serial.h"
 
 #if defined(__linux__)
 #error "You are not using a cross-compiler, u suck"
@@ -11,6 +12,12 @@
 void kmain(void)
 {
     terminal_initialize();
+    terminal_writestring("Terminal initialized\n");
 
-    terminal_writestring("Terminal initalized\n");
+    serial_configure_baud_rate(SERIAL_COM1_BASE, 3);
+    serial_configure_line(SERIAL_COM1_BASE);
+    serial_is_transmit_fifo_empty(SERIAL_COM1_BASE);
+    
+    serial_send(SERIAL_COM1_BASE, "Serial initialized");
+    terminal_writestring("Serial initialized\n");
 }

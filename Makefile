@@ -47,7 +47,7 @@ run: PintOS.iso
 
 # Debug OS using qemu and GDB
 debug: PintOS.iso
-	$(VIRTUALIZER) -s -cdrom PintOS.iso &
+	$(VIRTUALIZER) -serial file:serial.log -s -S -cdrom PintOS.iso &
 	gdb -ex "target remote $(DEBUG_IP):1234" -ex "symbol-file iso/boot/kernel.elf" -ex "b kmain" -ex "continue"
 
 # Compile all source files
@@ -58,4 +58,4 @@ debug: PintOS.iso
 	$(AS) $(ASFLAGS) $< -o $@
 
 clean:
-	-$(RM) $(wildcard $(OBJFILES)) PintOS.iso iso/boot/kernel.elf
+	-$(RM) $(wildcard $(OBJFILES)) PintOS.iso serial.log iso/boot/kernel.elf
