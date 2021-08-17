@@ -14,6 +14,7 @@
 
 void terminal_initialize(void);
 
+void terminal_setcolor(uint8_t color);
 void terminal_enable_cursor(uint8_t cursor_start, uint8_t cursor_end);
 void terminal_disable_cursor(void);
 uint16_t terminal_get_cursor_position(void);

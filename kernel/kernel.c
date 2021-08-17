@@ -1,4 +1,5 @@
 #include "../drivers/tty.h"
+#include "../drivers/vga.h"
 #include "../drivers/serial.h"
 
 #if defined(__linux__)
@@ -12,6 +13,7 @@
 void kmain(void)
 {
     terminal_initialize();
+    terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_BLUE, VGA_COLOR_BLACK));
     terminal_writestring("Terminal initialized\n");
 
     serial_configure_baud_rate(SERIAL_COM1_BASE, 3);
@@ -19,5 +21,6 @@ void kmain(void)
     serial_is_transmit_fifo_empty(SERIAL_COM1_BASE);
     
     serial_send(SERIAL_COM1_BASE, "Serial initialized");
+    terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_BROWN, VGA_COLOR_BLACK));
     terminal_writestring("Serial initialized\n");
 }
