@@ -1,12 +1,3 @@
-# Check if host is WSL (prob only for me lul)
-ifneq (,$(findstring WSL,$(shell uname -r)))
-	VIRTUALIZER := qemu-system-i386.exe
-	DEBUG_IP := $(shell tail -1 /etc/resolv.conf | cut -d' ' -f2)
-else
-	VIRTUALIZER := qemu-system-i386
-	DEBUG_IP := "localhost"
-endif
-
 # Find src files
 C_SOURCES := $(shell find . -type f -name "*.c")
 H_SOURCES := $(shell find . -type f -name "*.h")
@@ -43,12 +34,12 @@ PintOS.iso: kernel.elf
 
 # Run OS iso on qemu
 run: PintOS.iso
-	$(VIRTUALIZER) -cdrom PintOS.iso -monitor stdio
+	qemu-system-i386 -cdrom PintOS.iso -monitor stdio
 
 # Debug OS using qemu and GDB
 debug: PintOS.iso
-	$(VIRTUALIZER) -serial file:serial.log -s -S -cdrom PintOS.iso &
-	gdb -ex "target remote $(DEBUG_IP):1234" -ex "symbol-file iso/boot/kernel.elf" -ex "b kmain" -ex "continue"
+	qemu-system-i386 -serial file:serial.log -s -S -cdrom PintOS.iso &
+	gdb -ex "target remote localhost:1234" -ex "symbol-file iso/boot/kernel.elf" -ex "b kmain" -ex "continue"
 
 # Compile all source files
 %.o: %.c 
